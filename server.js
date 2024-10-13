@@ -1,0 +1,22 @@
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const connectDB = require('./config/db');
+const authRoutes = require('./routes/auth');
+const postRoutes = require('./routes/posts');
+const methodOverride = require('method-override');
+require('dotenv').config();
+const app = express();
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+connectDB();
+app.use(cookieParser());
+app.use(methodOverride('_method'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(authRoutes);
+app.use('/api/posts', postRoutes);
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
+});

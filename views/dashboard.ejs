@@ -1,0 +1,15 @@
+<%- include("partial/header") %>
+<main>
+    <h3>HI, <%= username %></h3>
+    <h4>You have posted <%= posts.length %> blog(s)</h4>
+    <% posts.forEach(post => { %>
+        <h3><%= post.title %></h3>
+        <p><%= post.content.substring(0,100) %>...</p>
+        <button type=""><a href="/api/posts/<%= post.id %>/edit"style="color: inherit; text-decoration: none;">Edit</a> </button>
+        <button type=""><a href="/api/posts/<%= post.id %>"style="color: inherit; text-decoration: none;">FullView</a> </button>
+        <form action="/api/posts/<%= post.id %>?_method=DELETE" method="POST" style="display:inline;">
+        <button type="submit">Delete</button>
+        </form>
+    <% }); %>
+</main>
+<%- include("partial/footer") %>
